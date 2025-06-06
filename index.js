@@ -1,4 +1,5 @@
 const { app, BrowserWindow, globalShortcut } = require('electron');
+const path = require('path');
 
 let mainWindow;
 let overlayWindow;
@@ -8,11 +9,14 @@ function createMainWindow () {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false
     }
   });
 
   mainWindow.loadFile('index.html');
+  mainWindow.webContents.openDevTools();
 }
 
 function createOverlayWindow() {
