@@ -8,9 +8,9 @@ jobs:
   build-windows:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Use Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         node-version: '18'
     - name: Install dependencies
@@ -18,17 +18,17 @@ jobs:
     - name: Build
       run: npm run build
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: MeetingAssist-Windows
-        path: dist/*.exe
+        path: dist/MeetingAssist Setup*.exe
 
   build-mac:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Use Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         node-version: '18'
     - name: Install dependencies
@@ -36,7 +36,7 @@ jobs:
     - name: Build
       run: npm run build
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: MeetingAssist-macOS
-        path: dist/*.dmg 
+        path: dist/MeetingAssist-*.dmg 
