@@ -1,0 +1,25 @@
+{
+  "name": "meetingassist",
+  "version": "1.0.0",
+  "description": "This is an assistant for meetings.",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SwiftAkira/InterviewPal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/SwiftAkira/InterviewPal/issues"
+  },
+  "homepage": "https://github.com/SwiftAkira/InterviewPal#readme",
+  "devDependencies": {
+    "electron": "^36.4.0"
+  }
+}
