@@ -28,6 +28,7 @@ function createOverlayWindow() {
   });
 
   overlayWindow.loadFile('overlay.html');
+  overlayWindow.setContentProtection(true);
   overlayWindow.hide();
 }
 
