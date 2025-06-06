@@ -50,10 +50,7 @@ async function requestMicrophonePermission() {
   }
 }
 
-app.whenReady().then(async () => {
-  if (process.platform === 'darwin') {
-    await requestMicrophonePermission();
-  }
+app.whenReady().then(() => {
   createMainWindow();
   createOverlayWindow();
 
@@ -82,8 +79,7 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.handle('save-audio', async (event, blob) => {
-  const buffer = Buffer.from(await blob.arrayBuffer());
+ipcMain.handle('save-audio', async (event, buffer) => {
   const filePath = path.join(app.getPath('temp'), 'audio.webm');
   fs.writeFileSync(filePath, buffer);
   console.log(`Audio saved to ${filePath}`);

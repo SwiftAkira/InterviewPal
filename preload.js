@@ -1,5 +1,5 @@
-const { contextBridge, desktopCapturer } = require('electron');
+const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  getAudioSources: () => desktopCapturer.getSources({ types: ['window', 'screen'] })
+  saveAudio: (buffer) => ipcRenderer.invoke('save-audio', buffer)
 }); 
