@@ -1,5 +1,6 @@
-const { app, BrowserWindow, globalShortcut } = require('electron');
+const { app, BrowserWindow, globalShortcut, ipcMain, systemPreferences } = require('electron');
 const path = require('path');
+const fs = require('fs');
 
 let mainWindow;
 let overlayWindow;
@@ -36,7 +37,23 @@ function createOverlayWindow() {
   overlayWindow.hide();
 }
 
-app.whenReady().then(() => {
+async function requestMicrophonePermission() {
+  const microphoneAccess = await systemPreferences.getMediaAccessStatus('microphone');
+  console.log(`Current microphone access status: ${microphoneAccess}`);
+
+  if (microphoneAccess !== 'granted') {
+    const success = await systemPreferences.askForMediaAccess('microphone');
+    console.log(`Microphone permission request success: ${success}`);
+    if (!success) {
+      console.error('Could not get microphone permission');
+    }
+  }
+}
+
+app.whenReady().then(async () => {
+  if (process.platform === 'darwin') {
+    await requestMicrophonePermission();
+  }
   createMainWindow();
   createOverlayWindow();
 
@@ -63,4 +80,11 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createMainWindow();
   }
+});
+
+ipcMain.handle('save-audio', async (event, blob) => {
+  const buffer = Buffer.from(await blob.arrayBuffer());
+  const filePath = path.join(app.getPath('temp'), 'audio.webm');
+  fs.writeFileSync(filePath, buffer);
+  console.log(`Audio saved to ${filePath}`);
 }); 
